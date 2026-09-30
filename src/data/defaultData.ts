@@ -1,0 +1,354 @@
+import { PortfolioData } from "../types/portfolio";
+
+export const defaultPortfolioData: PortfolioData = {
+  hero: {
+    badge: "AUTOMATION ARCHITECT & TECHNICAL LEAD",
+    headlineStart: "Scaling",
+    headlineMuted: "efficiency",
+    headlineMiddle: "through",
+    headlineAccent: "intelligent",
+    headlineEnd: "automation.",
+    subheading: "I bridge business requirements and technology to design scalable enterprise solutions. Specializing in RPA, UiPath, Power Platform, and Python.",
+    cvUrl: "",
+    cvFileName: "Ivan_Ivanov_CV.pdf",
+    cvUpdatedAt: "2026-09-30"
+  },
+  about: {
+    paragraphs: [
+      "I am an Automation Architect and Technical Lead with 10+ years of experience across automation, software development, data, and business process optimisation.",
+      "At KPMG Bulgaria, I lead end-to-end automation programmes, combining solution architecture, technical leadership, and stakeholder management. My focus is on designing scalable and maintainable enterprise solutions that solve real-world business challenges."
+    ],
+    yearsExperience: "10+",
+    yearsLabel: "Years Experience",
+    projectsCompleted: "50+",
+    projectsLabel: "Projects Completed",
+    profileImage: "/src/assets/images/profile.jpg"
+  },
+  experiences: [
+    {
+      id: "1",
+      role: "Manager, RPA",
+      company: "KPMG Bulgaria",
+      period: "Sep 2025 - Present",
+      description: [
+        "Lead end-to-end automation initiatives, from process discovery and solution architecture through development, deployment, and production support.",
+        "Design scalable automation solutions using UiPath, Python, Microsoft Power Platform, Excel, Power Query, APIs, SQL, and related technologies.",
+        "Lead and mentor an RPA team, providing technical direction, solution reviews, development standards, and capability development.",
+        "Define automation architecture, governance, security, and lifecycle standards, while translating business requirements into practical technical solutions.",
+        "Drive continuous improvement of the automation landscape, production operations, and delivery processes across business and technology stakeholders."
+      ]
+    },
+    {
+      id: "2",
+      role: "Associate Manager 2, RPA",
+      company: "KPMG Bulgaria",
+      period: "Sep 2023 - Aug 2025",
+      description: [
+        "Designed RPA solutions and automation architectures aligned with CoE standards, business requirements, scalability, security, and maintainability.",
+        "Led process discovery and solution design, translating business requirements into workflows, technical specifications, user stories, and implementation plans.",
+        "Coordinated between business, IT, and delivery teams throughout development, testing, UAT, deployment, and rollout.",
+        "Provided technical guidance to RPA developers, supporting solution quality, development standards, troubleshooting, and continuous improvement."
+      ]
+    },
+    {
+      id: "3",
+      role: "Associate Manager 1, RPA",
+      company: "KPMG Bulgaria",
+      period: "Sep 2021 - Aug 2023",
+      description: [
+        "Designed RPA solutions based on business requirements, process analysis, and established CoE architecture principles.",
+        "Worked closely with business and IT stakeholders to identify automation opportunities and define requirements.",
+        "Created solution designs, process models, technical documentation, and user stories for automation projects.",
+        "Supported development, testing, UAT, deployment, and rollout, ensuring solutions were maintainable and reliable."
+      ]
+    },
+    {
+      id: "4",
+      role: "Senior RPA Developer",
+      company: "KPMG Bulgaria",
+      period: "Jan 2020 - Aug 2021",
+      description: [
+        "Led the technical development of RPA solutions, including process analysis, automation design, and optimization.",
+        "Built RPA solutions from scratch using UiPath and Power Platform, including attended and unattended robots.",
+        "Analyzed business processes and translated them into scalable, maintainable automation solutions.",
+        "Worked with UiPath, Power Platform, and VBA to automate business processes and integrate into existing environments."
+      ]
+    },
+    {
+      id: "5",
+      role: "Specialist Time & Utilization Management",
+      company: "GfK - An NIQ Company",
+      period: "Feb 2020 - Mar 2025",
+      description: [
+        "Managed the production of global management Scorecards, supporting reporting across GfK companies worldwide.",
+        "Maintained and optimized an Excel-based reporting solution using VBA, automating data processing and generation.",
+        "Generated and distributed hundreds of recurring management reports to global and regional stakeholders.",
+        "Worked with data from multiple source systems, transforming it into standardized management reporting.",
+        "Worked with SAP, BEx Analyzer, SQL, Excel, and VBA."
+      ]
+    },
+    {
+      id: "6",
+      role: "Specialist, Controlling",
+      company: "GfK - An NIQ Company",
+      period: "Mar 2018 - Jan 2020",
+      description: [
+        "Produced and maintained daily, weekly, and monthly management reports for international stakeholders.",
+        "Automated and optimized reporting processes using Excel VBA, Power Query, SQL, and SAP/BEx Analyzer.",
+        "Maintained and improved reporting templates covering Pipeline, Utilization, and KPIs.",
+        "Collected, transformed, and validated data from multiple systems to ensure accurate consistent reporting."
+      ]
+    },
+    {
+      id: "7",
+      role: "Junior Specialist, Controlling",
+      company: "GfK - An NIQ Company",
+      period: "Nov 2015 - Feb 2018",
+      description: [
+        "Produced recurring management reports and Scorecards working with data from multiple systems.",
+        "Supported the optimization and automation of reporting processes using Excel, VBA, SQL, and Power Query.",
+        "Performed data validation, reporting troubleshooting, and process improvements."
+      ]
+    },
+    {
+      id: "8",
+      role: "DP Specialist / Senior Executive",
+      company: "GfK - An NIQ Company",
+      period: "Nov 2011 - Nov 2014",
+      description: [
+        "Took technical ownership of the CE Pricing Sheets project, updating Excel-based templates used across the organization.",
+        "Generated and maintained management Scorecards covering Pipeline and Utilization reporting.",
+        "Automated recurring reporting activities using Excel and VBA, improving efficiency and consistency.",
+        "Processed market research data and prepared output tables for analysis using QUANTUM and SPSS."
+      ]
+    },
+    {
+      id: "9",
+      role: "IT Administrator",
+      company: "Partner Travel",
+      period: "Mar 2010 - Feb 2012",
+      description: [
+        "Administered the company's website and supported day-to-day IT operations, including office systems.",
+        "Created and maintained web banners, flyers, and other digital materials for marketing."
+      ]
+    }
+  ],
+  skills: [
+    {
+      id: "automation",
+      name: "Automation",
+      iconType: "automation",
+      skills: [
+        { name: "UiPath", slug: "uipath" },
+        { name: "RPA", slug: "uipath" },
+        { name: "Solution Architecture" },
+        { name: "Process Automation", slug: "n8n" },
+        { name: "Automation Governance" }
+      ]
+    },
+    {
+      id: "technical",
+      name: "Technical",
+      iconType: "technical",
+      skills: [
+        { name: "Python", slug: "python" },
+        { name: "SQL", slug: "postgresql" },
+        { name: "VBA", slug: "visualbasic" },
+        { name: "Power Automate", slug: "powerautomate" },
+        { name: "Power Apps", slug: "powerapps" },
+        { name: "APIs", slug: "postman" },
+        { name: "Low-Code", slug: "zapier" }
+      ]
+    },
+    {
+      id: "data",
+      name: "Data & BI",
+      iconType: "data",
+      skills: [
+        { name: "Power BI", slug: "powerbi" },
+        { name: "Power Query", slug: "microsoftexcel" },
+        { name: "Data Analysis", slug: "pandas" },
+        { name: "Data Processing" },
+        { name: "KPI Reporting", slug: "tableau" }
+      ]
+    },
+    {
+      id: "leadership",
+      name: "Leadership",
+      iconType: "leadership",
+      skills: [
+        { name: "Technical Leadership" },
+        { name: "Stakeholder Management" },
+        { name: "Team Management" },
+        { name: "Project Delivery", slug: "asana" }
+      ]
+    }
+  ],
+  certifications: [
+    {
+      id: "cert-1",
+      title: "Certified IQ Score (135)",
+      provider: "MyIQ",
+      date: "Sep 2026",
+      certId: "415 889",
+      logo: "/src/assets/certificates/MyIQ logo.jpg",
+      fullImage: "/src/assets/certificates/MyIQ Certified IQ Score.png"
+    },
+    {
+      id: "cert-2",
+      title: "The 3-Minute Rule: Say Less to Get More",
+      provider: "LinkedIn",
+      date: "Jun 2025",
+      link: "https://www.linkedin.com/learning/certificates/59e214f1134b89d8c9be1b41f4d6b9d2891ffe2a2f35ca511dd7cf69a59a0f9f",
+      logo: "/src/assets/certificates/LinkedIn logo.jpg",
+      fullImage: "/src/assets/certificates/The 3-Minute Rule Say Less to Get More.jpg"
+    },
+    {
+      id: "cert-3",
+      title: "Effective Technical Communication",
+      provider: "LinkedIn",
+      date: "Oct 2020",
+      link: "https://www.linkedin.com/learning/certificates/c172eb5ea816de9dbf00a2f10cd5864c13e042a622af32236ea67c8ed0d5a0d2",
+      logo: "/src/assets/certificates/LinkedIn logo.jpg",
+      fullImage: "/src/assets/certificates/Tech Soft Skills Effective Technical Communication.png"
+    },
+    {
+      id: "cert-4",
+      title: "Programming Foundations: Fundamentals",
+      provider: "LinkedIn",
+      date: "Sep 2020",
+      link: "https://www.linkedin.com/learning/certificates/9023370cf8c0f8ab17c3e806e4c9af4e955f167497e010d9bb14d8c6b804cbba",
+      logo: "/src/assets/certificates/LinkedIn logo.jpg",
+      fullImage: "/src/assets/certificates/Programming Foundations Fundamentals.png"
+    },
+    {
+      id: "cert-5",
+      title: "Power Automate: Advanced Business Automation",
+      provider: "LinkedIn",
+      date: "Aug 2020",
+      link: "https://www.linkedin.com/learning/certificates/b971e906b503edef5105ede6f502bbef8b5d755c2342389ecad173a17c3c124f",
+      logo: "/src/assets/certificates/LinkedIn logo.jpg",
+      fullImage: "/src/assets/certificates/Microsoft Power Automate Advanced Business Automation.png"
+    },
+    {
+      id: "cert-6",
+      title: "Managing Virtual Teams",
+      provider: "LinkedIn",
+      date: "Aug 2020",
+      link: "https://www.linkedin.com/learning/certificates/2beb5417f90c1e4b0a3df9972e2ed3d5a543feb02f04b4c4c4f426d431af390e",
+      logo: "/src/assets/certificates/LinkedIn logo.jpg",
+      fullImage: "/src/assets/certificates/Managing Virtual Teams.png"
+    },
+    {
+      id: "cert-7",
+      title: "RPA Developer Foundation",
+      provider: "UiPath",
+      date: "Feb 2020",
+      logo: "/src/assets/certificates/UiPath logo.jpg",
+      fullImage: "/src/assets/certificates/UiPath Academy - RPA Developer Foundation - Blue.png"
+    },
+    {
+      id: "cert-8",
+      title: "AI Computer Vision 2.0",
+      provider: "UiPath",
+      date: "Feb 2020",
+      logo: "/src/assets/certificates/UiPath logo.jpg",
+      fullImage: "/src/assets/certificates/UiPath Academy - AI Computer Vision 2.0 - Blue.png"
+    },
+    {
+      id: "cert-9",
+      title: "UiPath Security Training",
+      provider: "UiPath",
+      date: "Feb 2020",
+      logo: "/src/assets/certificates/UiPath logo.jpg",
+      fullImage: "/src/assets/certificates/UiPath Academy - UiPath Security Training - Blue.png"
+    },
+    {
+      id: "cert-10",
+      title: "UiPath Licensing Training",
+      provider: "UiPath",
+      date: "Feb 2020",
+      logo: "/src/assets/certificates/UiPath logo.jpg",
+      fullImage: "/src/assets/certificates/UiPath Academy - UiPath Licensing Training - Orange.png"
+    },
+    {
+      id: "cert-11",
+      title: "RPA Developer - SAP Automation Training",
+      provider: "UiPath",
+      date: "Feb 2020",
+      logo: "/src/assets/certificates/UiPath logo.jpg",
+      fullImage: "/src/assets/certificates/UiPath Academy - RPA Developer - SAP Automation Training - Blue.png"
+    },
+    {
+      id: "cert-12",
+      title: "RPA Starter Training",
+      provider: "UiPath",
+      date: "Jan 2020",
+      logo: "/src/assets/certificates/UiPath logo.jpg",
+      fullImage: "/src/assets/certificates/UiPath Academy - RPA Starter Traning - Orange.png"
+    },
+    {
+      id: "cert-13",
+      title: "Data Modeling Using Power Pivot",
+      provider: "Excel Olympics",
+      date: "Nov 2018",
+      logo: "/src/assets/certificates/Excel Olympics logo.jpg"
+    },
+    {
+      id: "cert-14",
+      title: "School of Finance & Accounting",
+      provider: "MDV Professional Education",
+      date: "Dec 2018",
+      logo: "/src/assets/certificates/MDV Professional Education logo.jpg"
+    },
+    {
+      id: "cert-15",
+      title: "Power Query: Transform Data",
+      provider: "Excelguru Consulting Inc.",
+      date: "Nov 2017",
+      logo: "/src/assets/certificates/Excelguru Consulting Inc. logo.jpg"
+    },
+    {
+      id: "cert-16",
+      title: "Microsoft PowerBI for Excel",
+      provider: "ITraining Bulgaria",
+      date: "Jul 2017",
+      logo: "/src/assets/certificates/ITraining Bulgaria logo.jpg"
+    },
+    {
+      id: "cert-17",
+      title: "Oracle Database 11g - SQL Fundamentals",
+      provider: "New Horizons",
+      date: "Apr 2016",
+      logo: "/src/assets/certificates/New Horizons logo.jpg"
+    },
+    {
+      id: "cert-18",
+      title: "General English B2",
+      provider: "BRITANICA",
+      date: "Nov 2013",
+      certId: "4500",
+      logo: "/src/assets/certificates/BRITANICA logo.jpg"
+    },
+    {
+      id: "cert-19",
+      title: "Excel Advanced",
+      provider: "ICT Development Bulgaria",
+      date: "Oct 2012"
+    },
+    {
+      id: "cert-20",
+      title: "Design your own microsystem",
+      provider: "EuroTraining-MST",
+      date: "Feb 2010"
+    }
+  ],
+  contact: {
+    email: "eng.IvanIvanov@outlook.com",
+    linkedIn: "https://linkedin.com/in/ivan-ivanov",
+    location: "Sofia, Bulgaria",
+    ctaTitle: "Ready to optimize your business processes?",
+    ctaSubtitle: "I am currently open to new opportunities in Automation Architecture, Technical Leadership, and Solution Design. Let's build something efficient together.",
+    availabilityText: "Available for worldwide remote consultation"
+  }
+};
