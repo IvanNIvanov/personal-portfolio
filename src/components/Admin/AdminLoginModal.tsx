@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Lock, X, KeyRound, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Lock, X, KeyRound, AlertCircle, ArrowRight } from 'lucide-react';
 import { usePortfolio } from '../../context/PortfolioContext';
 
 interface AdminLoginModalProps {
@@ -125,17 +125,6 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({ isOpen, onClos
                   </>
                 )}
               </button>
-            </div>
-
-            <div className="p-3.5 bg-blue-50/70 border border-blue-100 rounded-2xl text-xs text-blue-900 space-y-1">
-              <div className="flex items-center gap-1.5 font-semibold text-blue-700">
-                <ShieldCheck size={14} />
-                <span>Default Access:</span>
-              </div>
-              <p className="text-zinc-600">
-                The initial default password is: <code className="bg-white px-1.5 py-0.5 rounded font-mono font-bold text-blue-600 border border-blue-200">ivanov2026</code>.
-                You can change it anytime in the Security tab.
-              </p>
             </div>
           </form>
         </motion.div>
