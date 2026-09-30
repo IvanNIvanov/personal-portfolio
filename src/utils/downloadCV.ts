@@ -4,13 +4,18 @@
  */
 export async function downloadCV(fileName?: string): Promise<boolean> {
   try {
-    const res = await fetch('/api/cv', {
+    let res = await fetch('/api/cv', {
       method: 'GET',
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache'
       }
     });
+
+    if (!res.ok) {
+      // Fallback for static hosting like GitHub Pages
+      res = await fetch('./cv.pdf');
+    }
 
     if (!res.ok) {
       throw new Error(`Server returned HTTP ${res.status}`);

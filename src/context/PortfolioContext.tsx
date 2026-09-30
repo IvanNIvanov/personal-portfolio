@@ -46,11 +46,15 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   });
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(false);
 
-  // Initial load from server
+  // Initial load from server or static json
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/portfolio');
+        let res = await fetch('/api/portfolio');
+        if (!res.ok) {
+          // Static hosting fallback (e.g. GitHub Pages)
+          res = await fetch('./portfolio.json');
+        }
         if (res.ok) {
           const serverData = await res.json();
           if (serverData && typeof serverData === 'object' && serverData.about) {
