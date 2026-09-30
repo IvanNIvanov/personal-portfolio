@@ -503,7 +503,7 @@ const Contact = () => {
           viewport={{ once: true }}
           className="space-y-6"
         >
-          <h3 className="text-3xl md:text-5xl font-bold text-zinc-900 leading-tight">
+          <h3 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
             {data.contact.ctaTitle}
           </h3>
           <p className="text-zinc-500 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
