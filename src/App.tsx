@@ -42,6 +42,7 @@ import { Experience, NavItem, Certification, SkillCategory } from "./types/portf
 import { AdminLoginModal } from "./components/Admin/AdminLoginModal";
 import { AdminPanel } from "./components/Admin/AdminPanel";
 import { downloadCV } from "./utils/downloadCV";
+import { getAssetUrl } from "./utils/assetUrl";
 
 // --- Components ---
 
@@ -252,11 +253,11 @@ const About = () => {
           <div className="absolute inset-0 bg-blue-600 rounded-3xl rotate-6 opacity-10"></div>
           <div className="absolute inset-0 bg-white rounded-3xl overflow-hidden border border-black/5 shadow-2xl">
             <img 
-              src={data.about.profileImage} 
+              src={getAssetUrl(data.about.profileImage)} 
               alt="Ivan Ivanov" 
               className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
               onError={(e) => {
-                e.currentTarget.src = "/src/assets/images/portfolio_avatar_1790596474999.jpg";
+                e.currentTarget.src = getAssetUrl("/src/assets/images/portfolio_avatar_1790596474999.jpg");
               }}
             />
           </div>
@@ -404,7 +405,7 @@ const Certifications = () => {
             <div className="flex items-start gap-4 mb-4">
               <div className="w-12 h-12 bg-zinc-50 rounded-2xl flex items-center justify-center shrink-0 border border-black/5 overflow-hidden">
                 {cert.logo && typeof cert.logo === 'string' ? (
-                  <img src={cert.logo} alt={cert.provider} className="w-8 h-8 object-contain" />
+                  <img src={getAssetUrl(cert.logo)} alt={cert.provider} className="w-8 h-8 object-contain" />
                 ) : (
                   <div className="text-blue-600"><Award size={24} /></div>
                 )}
@@ -471,7 +472,7 @@ const Certifications = () => {
             </div>
             <div className="overflow-auto p-4 flex items-center justify-center bg-zinc-100">
               <img 
-                src={selectedCert.fullImage} 
+                src={getAssetUrl(selectedCert.fullImage)} 
                 alt={selectedCert.title} 
                 className="max-w-full h-auto rounded-lg shadow-lg"
               />

@@ -28,6 +28,7 @@ import {
 import { usePortfolio } from '../../context/PortfolioContext';
 import { PortfolioData, Experience, SkillCategory, Certification } from '../../types/portfolio';
 import { downloadCV } from '../../utils/downloadCV';
+import { getAssetUrl } from '../../utils/assetUrl';
 
 interface AdminPanelProps {
   isOpen: boolean;
@@ -599,11 +600,11 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose }) => {
                     <div className="flex flex-col items-center">
                       <div className="w-40 h-40 rounded-3xl overflow-hidden border-2 border-blue-600/30 shadow-xl relative bg-zinc-100">
                         <img
-                          src={formData.about.profileImage}
+                          src={getAssetUrl(formData.about.profileImage)}
                           alt="Profile Preview"
                           className="w-full h-full object-cover"
                           onError={(e) => {
-                            e.currentTarget.src = '/src/assets/images/portfolio_avatar_1790596474999.jpg';
+                            e.currentTarget.src = getAssetUrl('/src/assets/images/portfolio_avatar_1790596474999.jpg');
                           }}
                         />
                       </div>
@@ -665,7 +666,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose }) => {
                                 formData.about.profileImage === path ? 'border-blue-600 ring-2 ring-blue-600/30' : 'border-zinc-200 opacity-60 hover:opacity-100'
                               }`}
                             >
-                              <img src={path} alt="" className="w-full h-full object-cover" />
+                              <img src={getAssetUrl(path)} alt="" className="w-full h-full object-cover" />
                             </button>
                           ))}
                         </div>
