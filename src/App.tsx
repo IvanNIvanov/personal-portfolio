@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring } from "motion/react";
+import { motion, useScroll, useSpring, AnimatePresence } from "motion/react";
 import { 
   Github, 
   Linkedin, 
@@ -31,6 +31,7 @@ import {
   PieChart,
   Award,
   X,
+  Menu,
   Search,
   ArrowRight,
   Lock,
@@ -59,92 +60,187 @@ const Navigation = ({
   onOpenAdmin: () => void;
 }) => {
   const { data, isAdminLoggedIn } = usePortfolio();
+  const [isPastHero, setIsPastHero] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroEl = document.getElementById("home");
+      const heroThreshold = heroEl ? heroEl.offsetHeight * 0.45 : 220;
+      setIsPastHero(window.scrollY > heroThreshold);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleNavClick = (id: string) => {
+    onScrollTo(id);
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <>
-      <nav className="fixed left-0 top-0 w-full h-16 md:h-screen md:w-24 bg-white/80 backdrop-blur-md border-b md:border-b-0 md:border-r border-black/5 flex flex-row md:flex-col items-center px-4 md:px-0 md:py-8 z-50">
-        <div className="text-2xl font-bold md:mb-12 mr-6 md:mr-0 tracking-tighter text-blue-600">I.</div>
-        <div className="flex flex-row md:flex-col gap-2 sm:gap-4 md:gap-8 flex-1 md:flex-none">
-          {items.map((item) => (
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isPastHero 
+            ? "bg-white/90 backdrop-blur-md border-b border-black/5 shadow-sm py-3" 
+            : "bg-white/60 backdrop-blur-sm border-b border-black/[0.04] py-4"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 flex items-center justify-between">
+          {/* Brand Left: Expands into 'I. Ivanov' when scrolled past the hero section */}
+          <div className="flex items-center gap-3">
             <button
-              key={item.id}
-              onClick={() => onScrollTo(item.id)}
-              className={`group relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl transition-all duration-300 cursor-pointer ${
-                activeSection === item.id 
-                  ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" 
-                  : "text-zinc-400 hover:text-black hover:bg-black/5"
-              }`}
+              onClick={() => handleNavClick("home")}
+              className="flex items-center gap-2.5 text-zinc-900 group cursor-pointer text-left focus:outline-none"
+              title="Back to Top"
             >
-              <div className="scale-90 md:scale-100">{item.icon}</div>
-              <span className="absolute md:left-full top-full md:top-auto mt-2 md:mt-0 md:ml-4 px-2 py-1 bg-zinc-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10 z-[60]">
-                {item.label}
+              <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-lg tracking-tighter shadow-md shadow-blue-600/25 group-hover:scale-105 transition-transform shrink-0">
+                I.
+              </div>
+              <AnimatePresence initial={false}>
+                {isPastHero && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -10, width: 0 }}
+                    animate={{ opacity: 1, x: 0, width: "auto" }}
+                    exit={{ opacity: 0, x: -10, width: 0 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="overflow-hidden whitespace-nowrap flex items-center gap-2"
+                  >
+                    <span className="font-bold text-base md:text-lg text-zinc-900 group-hover:text-blue-600 transition-colors">
+                      I. Ivanov
+                    </span>
+                    <span className="hidden lg:inline text-xs font-medium text-zinc-400 border-l border-zinc-200 pl-2">
+                      Automation Architect
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
+          </div>
+
+          {/* Minimal Navigation Menu (Desktop) */}
+          <nav className="hidden md:flex items-center gap-1 bg-zinc-100/80 p-1.5 rounded-full border border-black/5 shadow-inner">
+            {items
+              .filter((item) => item.id !== "home" || !isPastHero)
+              .map((item) => {
+                const isActive = activeSection === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleNavClick(item.id)}
+                    className={`relative px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
+                      isActive
+                        ? "bg-blue-600 text-white shadow-sm shadow-blue-600/25"
+                        : "text-zinc-600 hover:text-zinc-900 hover:bg-black/5"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+          </nav>
+
+          {/* Quick Actions (Right) */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Admin Portal Button */}
+            <button
+              onClick={onOpenAdmin}
+              className={`w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer group relative ${
+                isAdminLoggedIn
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                  : "text-zinc-500 bg-zinc-50 border border-black/5 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-200"
+              }`}
+              title={isAdminLoggedIn ? "Admin Dashboard (Active)" : "Admin Portal"}
+            >
+              {isAdminLoggedIn ? <Edit3 size={16} /> : <Lock size={16} />}
+              <span className="absolute right-0 top-full mt-2 px-2 py-1 bg-zinc-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10 z-[60]">
+                {isAdminLoggedIn ? "Admin Dashboard" : "Admin Portal"}
               </span>
             </button>
-          ))}
+
+            {/* LinkedIn */}
+            <a 
+              href={data.contact.linkedIn} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="w-9 h-9 hidden sm:flex items-center justify-center rounded-full text-zinc-600 bg-zinc-50 border border-black/5 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 cursor-pointer"
+              title="LinkedIn Profile"
+            >
+              <Linkedin size={16} />
+            </a>
+
+            {/* Contact / Email CTA */}
+            <button
+              onClick={() => handleNavClick("contact")}
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold text-white bg-zinc-900 hover:bg-blue-600 transition-all shadow-sm cursor-pointer"
+            >
+              <Mail size={14} />
+              <span>Contact</span>
+            </button>
+
+            {/* Mobile Hamburger Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl bg-zinc-100 text-zinc-700 hover:bg-zinc-200 transition-colors cursor-pointer"
+              aria-label="Toggle Navigation Menu"
+            >
+              {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
+          </div>
         </div>
 
-        <div className="hidden md:flex flex-col gap-3 mt-auto items-center">
-          {/* Admin Access Button */}
-          <button
-            onClick={onOpenAdmin}
-            className={`w-11 h-11 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer group relative ${
-              isAdminLoggedIn
-                ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
-                : "text-zinc-400 bg-zinc-50 border border-black/5 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-200"
-            }`}
-            title={isAdminLoggedIn ? "Admin Dashboard (Active)" : "Admin Portal"}
-          >
-            {isAdminLoggedIn ? <Edit3 size={18} /> : <Lock size={18} />}
-            <span className="absolute left-full ml-4 px-2 py-1 bg-zinc-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10 z-[60]">
-              {isAdminLoggedIn ? "Admin Dashboard" : "Admin Portal"}
-            </span>
-          </button>
+        {/* Mobile Dropdown Navigation */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-black/5 bg-white/95 backdrop-blur-xl px-6 py-4 shadow-xl overflow-hidden mt-3"
+            >
+              <div className="flex flex-col gap-1.5">
+                {items.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => handleNavClick(item.id)}
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all text-left ${
+                      activeSection === item.id
+                        ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                        : "text-zinc-700 hover:bg-zinc-100"
+                    }`}
+                  >
+                    <span className="scale-90">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </button>
+                ))}
 
-          <a 
-            href={data.contact.linkedIn} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="w-11 h-11 flex items-center justify-center rounded-full text-zinc-600 bg-zinc-50 border border-black/5 hover:bg-blue-600 hover:text-white hover:border-blue-600 hover:shadow-lg hover:shadow-blue-600/20 transition-all duration-300 cursor-pointer"
-            title="LinkedIn Profile"
-          >
-            <Linkedin size={20} />
-          </a>
-          <a 
-            href={`mailto:${data.contact.email}`} 
-            className="w-11 h-11 flex items-center justify-center rounded-full text-zinc-600 bg-zinc-50 border border-black/5 hover:bg-blue-600 hover:text-white hover:border-blue-600 hover:shadow-lg hover:shadow-blue-600/20 transition-all duration-300 cursor-pointer"
-            title="Send Email"
-          >
-            <Mail size={20} />
-          </a>
-        </div>
-      </nav>
-
-      {/* Floating Action Buttons for Mobile */}
-      <div className="md:hidden fixed bottom-6 left-6 z-50 flex flex-col gap-3">
-        <button
-          onClick={onOpenAdmin}
-          className={`w-12 h-12 flex items-center justify-center rounded-full shadow-xl border border-white/10 transition-all ${
-            isAdminLoggedIn ? "bg-indigo-600 text-white shadow-indigo-600/40" : "bg-zinc-900 text-white"
-          }`}
-          title="Admin Panel"
-        >
-          {isAdminLoggedIn ? <Edit3 size={20} /> : <Lock size={20} />}
-        </button>
-        <a 
-          href={data.contact.linkedIn} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="w-12 h-12 flex items-center justify-center rounded-full text-white bg-blue-600 shadow-xl shadow-blue-600/40 border border-white/10"
-        >
-          <Linkedin size={22} />
-        </a>
-        <a 
-          href={`mailto:${data.contact.email}`} 
-          className="w-12 h-12 flex items-center justify-center rounded-full text-white bg-blue-600 shadow-xl shadow-blue-600/40 border border-white/10"
-        >
-          <Mail size={22} />
-        </a>
-      </div>
+                <div className="pt-3 mt-2 border-t border-black/5 flex items-center justify-between">
+                  <a 
+                    href={data.contact.linkedIn} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-2 text-xs font-semibold text-zinc-600 hover:text-blue-600 py-1"
+                  >
+                    <Linkedin size={15} />
+                    <span>LinkedIn Profile</span>
+                  </a>
+                  <a 
+                    href={`mailto:${data.contact.email}`} 
+                    className="flex items-center gap-2 text-xs font-semibold text-blue-600 py-1"
+                  >
+                    <Mail size={15} />
+                    <span>Send Email</span>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
     </>
   );
 };
@@ -688,12 +784,12 @@ export default function App() {
   };
 
   const navItems: NavItem[] = [
-    { id: "home", label: "Home", icon: <Globe size={20} /> },
-    { id: "about", label: "Profile", icon: <Layout size={20} /> },
-    { id: "experience", label: "Experience", icon: <Briefcase size={20} /> },
-    { id: "skills", label: "Expertise", icon: <Cpu size={20} /> },
-    { id: "certifications", label: "Certifications", icon: <Award size={20} /> },
-    { id: "contact", label: "Contact", icon: <Mail size={20} /> },
+    { id: "home", label: "Home", icon: <Globe size={18} /> },
+    { id: "about", label: "About", icon: <Layout size={18} /> },
+    { id: "experience", label: "Experience", icon: <Briefcase size={18} /> },
+    { id: "skills", label: "Skills", icon: <Cpu size={18} /> },
+    { id: "certifications", label: "Certifications", icon: <Award size={18} /> },
+    { id: "contact", label: "Contact", icon: <Mail size={18} /> },
   ];
 
   useEffect(() => {
@@ -739,7 +835,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row font-['Plus_Jakarta_Sans'] bg-[#F8F9FA] min-h-screen overflow-x-hidden relative">
+    <div className="flex flex-col font-['Plus_Jakarta_Sans'] bg-[#F8F9FA] min-h-screen overflow-x-hidden relative">
       {/* Dynamic top reading scroll progress bar */}
       <motion.div 
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-400 z-[100] origin-left pointer-events-none" 
@@ -753,7 +849,7 @@ export default function App() {
         onOpenAdmin={handleOpenAdmin}
       />
 
-      <main className="flex-1 pt-16 md:pt-0 md:ml-24 w-full overflow-x-hidden">
+      <main className="flex-1 w-full overflow-x-hidden">
         <Hero />
         <About />
         <ExperienceSection />
