@@ -91,43 +91,44 @@ const Navigation = ({
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 flex items-center justify-between">
-          {/* Brand Left: Morphs from 'I.' to blue 'Ivan Ivanov' when scrolled past hero */}
+          {/* Brand Left: Blue badge that expands from 'I.' to 'Ivan Ivanov' on scroll */}
           <div className="flex items-center gap-3">
-            <button
+            <motion.button
               onClick={() => handleNavClick("home")}
-              className="group cursor-pointer focus:outline-none flex items-center py-1"
+              layout
+              className={`h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-md shadow-blue-600/25 hover:bg-blue-700 transition-colors cursor-pointer focus:outline-none overflow-hidden ${
+                isPastHero ? "px-3.5 tracking-tight text-sm md:text-base" : "w-9 text-lg font-black tracking-tighter"
+              }`}
               title={isPastHero ? "Home (Scroll to top)" : "Ivan Ivanov"}
+              transition={{ layout: { duration: 0.25, ease: "easeOut" } }}
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 {!isPastHero ? (
-                  <motion.div
-                    key="brand-short"
-                    initial={{ opacity: 0, scale: 0.85 }}
+                  <motion.span
+                    key="badge-short"
+                    initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.85 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-2xl font-black tracking-tighter text-blue-600 group-hover:scale-105 transition-transform flex items-center"
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.15 }}
+                    className="leading-none select-none"
                   >
                     I.
-                  </motion.div>
+                  </motion.span>
                 ) : (
-                  <motion.div
-                    key="brand-full"
-                    initial={{ opacity: 0, x: -8 }}
+                  <motion.span
+                    key="badge-full"
+                    initial={{ opacity: 0, x: -4 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -8 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center gap-1.5 group-hover:opacity-90 transition-opacity"
+                    exit={{ opacity: 0, x: -4 }}
+                    transition={{ duration: 0.18 }}
+                    className="whitespace-nowrap leading-none select-none flex items-center gap-1.5"
                   >
-                    <span className="text-blue-600 font-extrabold text-lg md:text-xl tracking-tight flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-blue-600 inline-block animate-pulse" />
-                      <span className="hidden sm:inline">Ivan Ivanov</span>
-                      <span className="sm:hidden">I. Ivanov</span>
-                    </span>
-                  </motion.div>
+                    <span className="hidden sm:inline">Ivan Ivanov</span>
+                    <span className="sm:hidden">I. Ivanov</span>
+                  </motion.span>
                 )}
               </AnimatePresence>
-            </button>
+            </motion.button>
           </div>
 
           {/* Minimal Navigation Menu (Desktop) */}
