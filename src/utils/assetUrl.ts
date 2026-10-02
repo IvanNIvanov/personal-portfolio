@@ -11,7 +11,10 @@ export function getAssetUrl(path?: string): string {
   }
 
   // Strip leading slash or dot-slash
-  const cleanPath = path.replace(/^(\.\/|\/)/, '');
+  let cleanPath = path.replace(/^(\.\/|\/)/, '');
+
+  // Normalize src/assets/ to assets/ so static hosts like GitHub Pages resolve correctly
+  cleanPath = cleanPath.replace(/^src\/assets\//, 'assets/');
 
   // Safely encode URI components per segment so spaces are %20 while slashes remain /
   const encodedSegments = cleanPath
