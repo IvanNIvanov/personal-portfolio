@@ -35,9 +35,10 @@ import {
   Search,
   ArrowRight,
   Lock,
-  Edit3
+  Edit3,
+  Building2
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { usePortfolio } from "./context/PortfolioContext";
 import { Experience, NavItem, Certification, SkillCategory } from "./types/portfolio";
 import { AdminLoginModal } from "./components/Admin/AdminLoginModal";
@@ -430,12 +431,34 @@ const About = () => {
   );
 };
 
-const ExperienceCard = ({ exp, index }: { exp: Experience, index: number }) => {
-  const isPresent = exp.period.toLowerCase().includes('present');
+interface CompanyExperienceGroup {
+  company: string;
+  overallPeriod: string;
+  roles: Experience[];
+}
+
+const getOverallPeriod = (roles: Experience[]): string => {
+  if (roles.length === 1) return roles[0].period;
+  const latestPeriod = roles[0].period;
+  const oldestPeriod = roles[roles.length - 1].period;
+  const latestEnd = latestPeriod.includes("-") ? latestPeriod.split("-")[1].trim() : latestPeriod;
+  const oldestStart = oldestPeriod.includes("-") ? oldestPeriod.split("-")[0].trim() : oldestPeriod;
+  return `${oldestStart} - ${latestEnd}`;
+};
+
+const CompanyExperienceCard = ({ 
+  group, 
+  groupIndex 
+}: { 
+  group: CompanyExperienceGroup; 
+  groupIndex: number; 
+}) => {
+  const hasMultipleRoles = group.roles.length > 1;
+  const isPresent = group.roles.some(r => r.period.toLowerCase().includes('present'));
 
   return (
     <div className="relative group">
-      {/* Dynamic timeline node on the left track */}
+      {/* Outer timeline node for the company */}
       <div className="absolute -left-[33px] md:-left-[49px] top-8 w-4 h-4 rounded-full bg-white border-2 border-blue-600 shadow-md group-hover:scale-125 group-hover:bg-blue-600 transition-all duration-300 z-10 flex items-center justify-center">
         {isPresent && (
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping absolute" />
@@ -446,36 +469,92 @@ const ExperienceCard = ({ exp, index }: { exp: Experience, index: number }) => {
         initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.5, delay: index * 0.05 }}
-        className="p-8 bg-white rounded-3xl border border-black/5 hover:border-blue-600/30 transition-all duration-300 shadow-sm hover:shadow-xl shadow-black/5 relative overflow-hidden"
+        transition={{ duration: 0.5, delay: groupIndex * 0.08 }}
+        className="p-6 md:p-8 bg-white rounded-3xl border border-black/5 hover:border-blue-600/30 transition-all duration-300 shadow-sm hover:shadow-xl shadow-black/5 relative overflow-hidden"
       >
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-          <div>
-            <div className="flex items-center gap-3">
-              <h3 className="text-2xl font-bold text-zinc-900">{exp.role}</h3>
-              {isPresent && (
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Active
-                </span>
-              )}
+        {/* Company Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-6 border-b border-black/5 gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+              <Building2 size={22} />
             </div>
-            <p className="text-blue-600 font-semibold text-base mt-0.5">{exp.company}</p>
+            <div>
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <h3 className="text-2xl md:text-3xl font-extrabold text-zinc-900 tracking-tight">
+                  {group.company}
+                </h3>
+                {isPresent && (
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Active
+                  </span>
+                )}
+                {hasMultipleRoles && (
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-blue-700 bg-blue-50 border border-blue-200">
+                    {group.roles.length} positions
+                  </span>
+                )}
+              </div>
+              <p className="text-zinc-500 text-xs sm:text-sm font-medium mt-0.5">
+                Career progression & responsibilities
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-zinc-500 font-medium text-sm bg-zinc-50 px-3.5 py-1.5 rounded-full border border-black/5 self-start md:self-auto">
+
+          <div className="flex items-center gap-2 text-zinc-600 font-semibold text-xs sm:text-sm bg-zinc-50 px-3.5 py-1.5 rounded-full border border-black/5 self-start md:self-auto shrink-0">
             <Calendar size={15} className="text-blue-600" />
-            {exp.period}
+            <span>{group.overallPeriod}</span>
           </div>
         </div>
-        <ul className="space-y-3">
-          {exp.description.map((item, i) => (
-            <li key={i} className="flex gap-3 text-zinc-600 leading-relaxed text-sm md:text-base">
-              <span className="mt-2 w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0 group-hover:scale-125 transition-transform" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
+
+        {/* Roles Sub-timeline within this company */}
+        <div className={`space-y-8 ${hasMultipleRoles ? 'relative border-l-2 border-blue-100/80 ml-2.5 sm:ml-3 pl-6 sm:pl-8' : ''}`}>
+          {group.roles.map((role, rIdx) => {
+            const isRoleActive = role.period.toLowerCase().includes('present');
+
+            return (
+              <div key={role.id || rIdx} className="relative group/role">
+                {/* Internal sub-timeline node */}
+                {hasMultipleRoles && (
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full bg-white border-2 border-blue-600 flex items-center justify-center group-hover/role:scale-125 transition-transform">
+                    {isRoleActive ? (
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    ) : (
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+                    )}
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      <h4 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover/role:text-blue-600 transition-colors">
+                        {role.role}
+                      </h4>
+                      {isRoleActive && (
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          Current Role
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-xs font-semibold text-zinc-500 bg-zinc-50 px-3 py-1 rounded-full border border-black/5 self-start sm:self-auto">
+                      {role.period}
+                    </span>
+                  </div>
+
+                  <ul className="space-y-2.5 pt-1">
+                    {role.description.map((item, i) => (
+                      <li key={i} className="flex gap-3 text-zinc-600 leading-relaxed text-sm md:text-base">
+                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0 group-hover/role:scale-125 transition-transform" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </motion.div>
     </div>
   );
@@ -484,12 +563,34 @@ const ExperienceCard = ({ exp, index }: { exp: Experience, index: number }) => {
 const ExperienceSection = () => {
   const { data } = usePortfolio();
 
+  const groupedExperiences = useMemo(() => {
+    const groups: CompanyExperienceGroup[] = [];
+
+    data.experiences.forEach((exp) => {
+      const lastGroup = groups[groups.length - 1];
+      if (lastGroup && lastGroup.company.trim().toLowerCase() === exp.company.trim().toLowerCase()) {
+        lastGroup.roles.push(exp);
+      } else {
+        groups.push({
+          company: exp.company,
+          overallPeriod: exp.period,
+          roles: [exp]
+        });
+      }
+    });
+
+    return groups.map(g => ({
+      ...g,
+      overallPeriod: getOverallPeriod(g.roles)
+    }));
+  }, [data.experiences]);
+
   return (
     <section id="experience" className="py-32 px-8 md:px-20 max-w-7xl mx-auto scroll-mt-20 md:scroll-mt-24">
       <SectionHeading title="Work History" subtitle="Experience" />
-      <div className="relative border-l-2 border-blue-100 ml-4 md:ml-8 pl-6 md:pl-10 space-y-10">
-        {data.experiences.map((exp, idx) => (
-          <ExperienceCard key={exp.id || idx} exp={exp} index={idx} />
+      <div className="relative border-l-2 border-blue-100 ml-4 md:ml-8 pl-6 md:pl-10 space-y-12">
+        {groupedExperiences.map((group, idx) => (
+          <CompanyExperienceCard key={`${group.company}-${idx}`} group={group} groupIndex={idx} />
         ))}
       </div>
     </section>
