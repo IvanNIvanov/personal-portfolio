@@ -957,9 +957,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose }) => {
                             className="p-4 flex items-center justify-between cursor-pointer select-none"
                           >
                             <div className="flex items-center gap-3 min-w-0">
-                              <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 overflow-hidden">
+                              <div className="w-10 h-10 rounded-xl bg-white border border-black/10 flex items-center justify-center shrink-0 overflow-hidden">
                                 {edu.logo ? (
-                                  <img src={getAssetUrl(edu.logo)} alt="" className="w-full h-full object-contain p-1" />
+                                  <img src={getAssetUrl(edu.logo)} alt="" className="w-full h-full object-cover" />
                                 ) : (
                                   <GraduationCap size={18} className="text-blue-600" />
                                 )}

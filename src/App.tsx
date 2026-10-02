@@ -477,12 +477,12 @@ const CompanyExperienceCard = ({
         {/* Company Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-6 border-b border-black/5 gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-white border border-black/10 p-2 flex items-center justify-center shrink-0 shadow-sm overflow-hidden group-hover:scale-105 transition-transform">
+            <div className="w-14 h-14 rounded-2xl bg-white border border-black/10 flex items-center justify-center shrink-0 shadow-sm overflow-hidden group-hover:scale-105 transition-transform">
               {group.logo ? (
                 <img 
                   src={getAssetUrl(group.logo)} 
                   alt={group.company} 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}
@@ -632,12 +632,12 @@ const EducationSection = () => {
           >
             <div>
               <div className="flex items-start gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-white border border-black/10 p-2 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
+                <div className="w-16 h-16 rounded-2xl bg-white border border-black/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
                   {edu.logo ? (
                     <img 
                       src={getAssetUrl(edu.logo)} 
                       alt={edu.institution} 
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                       }}
@@ -782,9 +782,9 @@ const Certifications = () => {
             className={`flex flex-col p-5 bg-white rounded-3xl border border-black/5 hover:border-blue-600/30 transition-all group shadow-sm hover:shadow-xl relative ${cert.fullImage ? 'cursor-pointer' : ''}`}
           >
             <div className="flex items-start gap-4 mb-4">
-              <div className="w-12 h-12 bg-zinc-50 rounded-2xl flex items-center justify-center shrink-0 border border-black/5 overflow-hidden">
+              <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shrink-0 border border-black/10 overflow-hidden shadow-xs group-hover:scale-105 transition-transform">
                 {cert.logo && typeof cert.logo === 'string' ? (
-                  <img src={getAssetUrl(cert.logo)} alt={cert.provider} className="w-8 h-8 object-contain" />
+                  <img src={getAssetUrl(cert.logo)} alt={cert.provider} className="w-full h-full object-cover" />
                 ) : (
                   <div className="text-blue-600"><Award size={24} /></div>
                 )}
