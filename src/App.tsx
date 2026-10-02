@@ -294,17 +294,27 @@ const Hero = () => {
         transition={{ duration: 0.8 }}
         className="space-y-6"
       >
-        <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-blue-50/80 border border-blue-200/60 rounded-full text-blue-700 text-xs font-semibold tracking-wide shadow-sm">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span>{data.hero.badge}</span>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-blue-50/80 border border-blue-200/60 rounded-full text-blue-700 text-xs font-semibold tracking-wide shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span>{data.hero.badge}</span>
+          </div>
         </div>
-        <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight text-zinc-900">
-          {data.hero.headlineStart} <span className="text-zinc-400">{data.hero.headlineMuted}</span> <br />
-          {data.hero.headlineMiddle} <span className="italic text-blue-600">{data.hero.headlineAccent}</span> {data.hero.headlineEnd}
-        </h1>
+
+        <div className="space-y-3">
+          <p className="text-xl md:text-2xl font-bold tracking-tight text-zinc-900 flex items-center gap-2">
+            <span>Hi, I'm <span className="text-blue-600">Ivan Ivanov</span></span>
+            <span className="inline-block animate-bounce text-2xl">👋</span>
+          </p>
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight text-zinc-900">
+            {data.hero.headlineStart} <span className="text-zinc-400">{data.hero.headlineMuted}</span> <br />
+            {data.hero.headlineMiddle} <span className="italic text-blue-600">{data.hero.headlineAccent}</span> {data.hero.headlineEnd}
+          </h1>
+        </div>
+
         <p className="text-zinc-600 text-lg md:text-xl max-w-2xl leading-relaxed">
           {data.hero.subheading}
         </p>
@@ -360,6 +370,15 @@ const About = () => {
           transition={{ duration: 0.8 }}
           className="space-y-6 text-zinc-600 text-lg leading-relaxed"
         >
+          <div className="border-b border-black/5 pb-4">
+            <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900">
+              Ivan Ivanov
+            </h3>
+            <p className="text-blue-600 font-semibold text-sm md:text-base mt-1">
+              Automation Architect & Technical Lead
+            </p>
+          </div>
+
           {data.about.paragraphs.map((paragraph, idx) => (
             <p key={idx}>{paragraph}</p>
           ))}
@@ -408,6 +427,14 @@ const About = () => {
                 e.currentTarget.src = getAssetUrl("/src/assets/images/portfolio_avatar_1790596474999.jpg");
               }}
             />
+            {/* Elegant name and role badge over the photo */}
+            <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl border border-black/5 shadow-lg flex items-center justify-between">
+              <div>
+                <p className="font-bold text-sm text-zinc-900">Ivan Ivanov</p>
+                <p className="text-xs text-zinc-500 font-medium">Manager, RPA @ KPMG Bulgaria</p>
+              </div>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" title="Available for opportunities" />
+            </div>
           </div>
         </motion.div>
       </div>
