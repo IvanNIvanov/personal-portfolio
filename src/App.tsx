@@ -91,30 +91,38 @@ const Navigation = ({
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 flex items-center justify-between">
-          {/* Brand Left: Expands into 'I. Ivanov' when scrolled past the hero section */}
+          {/* Brand Left: Morphs from 'I.' to blue 'Ivan Ivanov' when scrolled past hero */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => handleNavClick("home")}
-              className="flex items-center gap-2.5 text-zinc-900 group cursor-pointer text-left focus:outline-none"
-              title="Back to Top"
+              className="group cursor-pointer focus:outline-none flex items-center py-1"
+              title={isPastHero ? "Home (Scroll to top)" : "Ivan Ivanov"}
             >
-              <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-lg tracking-tighter shadow-md shadow-blue-600/25 group-hover:scale-105 transition-transform shrink-0">
-                I.
-              </div>
-              <AnimatePresence initial={false}>
-                {isPastHero && (
+              <AnimatePresence mode="wait">
+                {!isPastHero ? (
                   <motion.div
-                    initial={{ opacity: 0, x: -10, width: 0 }}
-                    animate={{ opacity: 1, x: 0, width: "auto" }}
-                    exit={{ opacity: 0, x: -10, width: 0 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="overflow-hidden whitespace-nowrap flex items-center gap-2"
+                    key="brand-short"
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.85 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-2xl font-black tracking-tighter text-blue-600 group-hover:scale-105 transition-transform flex items-center"
                   >
-                    <span className="font-bold text-base md:text-lg text-zinc-900 group-hover:text-blue-600 transition-colors">
-                      I. Ivanov
-                    </span>
-                    <span className="hidden lg:inline text-xs font-medium text-zinc-400 border-l border-zinc-200 pl-2">
-                      Automation Architect
+                    I.
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="brand-full"
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center gap-1.5 group-hover:opacity-90 transition-opacity"
+                  >
+                    <span className="text-blue-600 font-extrabold text-lg md:text-xl tracking-tight flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-blue-600 inline-block animate-pulse" />
+                      <span className="hidden sm:inline">Ivan Ivanov</span>
+                      <span className="sm:hidden">I. Ivanov</span>
                     </span>
                   </motion.div>
                 )}
@@ -124,24 +132,22 @@ const Navigation = ({
 
           {/* Minimal Navigation Menu (Desktop) */}
           <nav className="hidden md:flex items-center gap-1 bg-zinc-100/80 p-1.5 rounded-full border border-black/5 shadow-inner">
-            {items
-              .filter((item) => item.id !== "home" || !isPastHero)
-              .map((item) => {
-                const isActive = activeSection === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => handleNavClick(item.id)}
-                    className={`relative px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? "bg-blue-600 text-white shadow-sm shadow-blue-600/25"
-                        : "text-zinc-600 hover:text-zinc-900 hover:bg-black/5"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
+            {items.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`relative px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? "bg-blue-600 text-white shadow-sm shadow-blue-600/25"
+                      : "text-zinc-600 hover:text-zinc-900 hover:bg-black/5"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
           </nav>
 
           {/* Quick Actions (Right) */}
@@ -784,7 +790,6 @@ export default function App() {
   };
 
   const navItems: NavItem[] = [
-    { id: "home", label: "Home", icon: <Globe size={18} /> },
     { id: "about", label: "About", icon: <Layout size={18} /> },
     { id: "experience", label: "Experience", icon: <Briefcase size={18} /> },
     { id: "skills", label: "Skills", icon: <Cpu size={18} /> },
