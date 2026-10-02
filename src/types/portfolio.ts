@@ -4,6 +4,18 @@ export interface Experience {
   company: string;
   period: string;
   description: string[];
+  logo?: string;
+}
+
+export interface Education {
+  id: string;
+  institution: string;
+  degree: string;
+  field?: string;
+  period: string;
+  location?: string;
+  logo?: string;
+  description?: string[];
 }
 
 export interface SkillItem {
@@ -57,6 +69,7 @@ export interface PortfolioData {
     profileImage: string;
   };
   experiences: Experience[];
+  education?: Education[];
   skills: SkillCategory[];
   certifications: Certification[];
   contact: {

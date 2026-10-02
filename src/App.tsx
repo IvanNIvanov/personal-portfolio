@@ -36,7 +36,8 @@ import {
   ArrowRight,
   Lock,
   Edit3,
-  Building2
+  Building2,
+  GraduationCap
 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { usePortfolio } from "./context/PortfolioContext";
@@ -434,6 +435,7 @@ const About = () => {
 interface CompanyExperienceGroup {
   company: string;
   overallPeriod: string;
+  logo?: string;
   roles: Experience[];
 }
 
@@ -474,9 +476,20 @@ const CompanyExperienceCard = ({
       >
         {/* Company Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-6 border-b border-black/5 gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-              <Building2 size={22} />
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-white border border-black/10 p-2 flex items-center justify-center shrink-0 shadow-sm overflow-hidden group-hover:scale-105 transition-transform">
+              {group.logo ? (
+                <img 
+                  src={getAssetUrl(group.logo)} 
+                  alt={group.company} 
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              ) : (
+                <Building2 size={24} className="text-blue-600" />
+              )}
             </div>
             <div>
               <div className="flex items-center gap-2.5 flex-wrap">
@@ -570,10 +583,12 @@ const ExperienceSection = () => {
       const lastGroup = groups[groups.length - 1];
       if (lastGroup && lastGroup.company.trim().toLowerCase() === exp.company.trim().toLowerCase()) {
         lastGroup.roles.push(exp);
+        if (!lastGroup.logo && exp.logo) lastGroup.logo = exp.logo;
       } else {
         groups.push({
           company: exp.company,
           overallPeriod: exp.period,
+          logo: exp.logo,
           roles: [exp]
         });
       }
@@ -591,6 +606,80 @@ const ExperienceSection = () => {
       <div className="relative border-l-2 border-blue-100 ml-4 md:ml-8 pl-6 md:pl-10 space-y-12">
         {groupedExperiences.map((group, idx) => (
           <CompanyExperienceCard key={`${group.company}-${idx}`} group={group} groupIndex={idx} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const EducationSection = () => {
+  const { data } = usePortfolio();
+  if (!data.education || data.education.length === 0) return null;
+
+  return (
+    <section id="education" className="py-20 md:py-32 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto scroll-mt-20 md:scroll-mt-24">
+      <SectionHeading title="Academic Background" subtitle="Education" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        {data.education.map((edu, idx) => (
+          <motion.div
+            key={edu.id || idx}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.5, delay: idx * 0.1 }}
+            className="p-8 bg-white rounded-3xl border border-black/5 hover:border-blue-600/30 transition-all duration-300 shadow-sm hover:shadow-xl shadow-black/5 flex flex-col justify-between relative group"
+          >
+            <div>
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-white border border-black/10 p-2 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
+                  {edu.logo ? (
+                    <img 
+                      src={getAssetUrl(edu.logo)} 
+                      alt={edu.institution} 
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <GraduationCap size={28} className="text-blue-600" />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-xl md:text-2xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors leading-tight mb-1">
+                    {edu.institution}
+                  </h3>
+                  <p className="text-blue-600 font-semibold text-sm sm:text-base">
+                    {edu.degree}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2.5 text-xs text-zinc-500 font-medium mt-2.5">
+                    <span className="flex items-center gap-1.5 bg-zinc-50 px-3 py-1 rounded-full border border-black/5">
+                      <Calendar size={13} className="text-blue-600" />
+                      {edu.period}
+                    </span>
+                    {edu.location && (
+                      <span className="flex items-center gap-1.5 bg-zinc-50 px-3 py-1 rounded-full border border-black/5">
+                        <MapPin size={13} className="text-blue-600" />
+                        {edu.location}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {edu.description && edu.description.length > 0 && (
+                <ul className="space-y-2 pt-4 border-t border-black/5 text-zinc-600 text-sm leading-relaxed">
+                  {edu.description.map((item, i) => (
+                    <li key={i} className="flex gap-2.5">
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0 group-hover:scale-125 transition-transform" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </motion.div>
         ))}
       </div>
     </section>
@@ -909,6 +998,7 @@ export default function App() {
   const navItems: NavItem[] = [
     { id: "about", label: "About", icon: <Layout size={18} /> },
     { id: "experience", label: "Experience", icon: <Briefcase size={18} /> },
+    { id: "education", label: "Education", icon: <GraduationCap size={18} /> },
     { id: "skills", label: "Skills", icon: <Cpu size={18} /> },
     { id: "certifications", label: "Certifications", icon: <Award size={18} /> },
     { id: "contact", label: "Contact", icon: <Mail size={18} /> },
@@ -1000,6 +1090,7 @@ export default function App() {
         <Hero />
         <About />
         <ExperienceSection />
+        <EducationSection />
         <Skills />
         <Certifications />
         <Contact />

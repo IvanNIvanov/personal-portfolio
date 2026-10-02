@@ -34,7 +34,8 @@
         "Lead and mentor an RPA team, providing technical direction, solution reviews, development standards, and capability development.",
         "Define automation architecture, governance, security, and lifecycle standards, while translating business requirements into practical technical solutions.",
         "Drive continuous improvement of the automation landscape, production operations, and delivery processes across business and technology stakeholders."
-      ]
+      ],
+      "logo": "/src/assets/logos/kpmg bulgaria.jpg"
     },
     {
       "id": "2",
@@ -46,7 +47,8 @@
         "Led process discovery and solution design, translating business requirements into workflows, technical specifications, user stories, and implementation plans.",
         "Coordinated between business, IT, and delivery teams throughout development, testing, UAT, deployment, and rollout.",
         "Provided technical guidance to RPA developers, supporting solution quality, development standards, troubleshooting, and continuous improvement."
-      ]
+      ],
+      "logo": "/src/assets/logos/kpmg bulgaria.jpg"
     },
     {
       "id": "3",
@@ -58,7 +60,8 @@
         "Worked closely with business and IT stakeholders to identify automation opportunities and define requirements.",
         "Created solution designs, process models, technical documentation, and user stories for automation projects.",
         "Supported development, testing, UAT, deployment, and rollout, ensuring solutions were maintainable and reliable."
-      ]
+      ],
+      "logo": "/src/assets/logos/kpmg bulgaria.jpg"
     },
     {
       "id": "4",
@@ -70,7 +73,8 @@
         "Built RPA solutions from scratch using UiPath and Power Platform, including attended and unattended robots.",
         "Analyzed business processes and translated them into scalable, maintainable automation solutions.",
         "Worked with UiPath, Power Platform, and VBA to automate business processes and integrate into existing environments."
-      ]
+      ],
+      "logo": "/src/assets/logos/kpmg bulgaria.jpg"
     },
     {
       "id": "5",
@@ -83,7 +87,8 @@
         "Generated and distributed hundreds of recurring management reports to global and regional stakeholders.",
         "Worked with data from multiple source systems, transforming it into standardized management reporting.",
         "Worked with SAP, BEx Analyzer, SQL, Excel, and VBA."
-      ]
+      ],
+      "logo": "/src/assets/logos/gfk a niq company.jpg"
     },
     {
       "id": "6",
@@ -95,7 +100,8 @@
         "Automated and optimized reporting processes using Excel VBA, Power Query, SQL, and SAP/BEx Analyzer.",
         "Maintained and improved reporting templates covering Pipeline, Utilization, and KPIs.",
         "Collected, transformed, and validated data from multiple systems to ensure accurate consistent reporting."
-      ]
+      ],
+      "logo": "/src/assets/logos/gfk a niq company.jpg"
     },
     {
       "id": "7",
@@ -106,7 +112,8 @@
         "Produced recurring management reports and Scorecards working with data from multiple systems.",
         "Supported the optimization and automation of reporting processes using Excel, VBA, SQL, and Power Query.",
         "Performed data validation, reporting troubleshooting, and process improvements."
-      ]
+      ],
+      "logo": "/src/assets/logos/gfk a niq company.jpg"
     },
     {
       "id": "8",
@@ -118,7 +125,8 @@
         "Generated and maintained management Scorecards covering Pipeline and Utilization reporting.",
         "Automated recurring reporting activities using Excel and VBA, improving efficiency and consistency.",
         "Processed market research data and prepared output tables for analysis using QUANTUM and SPSS."
-      ]
+      ],
+      "logo": "/src/assets/logos/gfk a niq company.jpg"
     },
     {
       "id": "9",
@@ -128,7 +136,8 @@
       "description": [
         "Administered the company's website and supported day-to-day IT operations, including office systems.",
         "Created and maintained web banners, flyers, and other digital materials for marketing."
-      ]
+      ],
+      "logo": "/src/assets/logos/partner travel.png"
     }
   ],
   "skills": [
@@ -246,7 +255,7 @@
       "provider": "LinkedIn",
       "date": "Jun 2025",
       "link": "https://www.linkedin.com/learning/certificates/59e214f1134b89d8c9be1b41f4d6b9d2891ffe2a2f35ca511dd7cf69a59a0f9f",
-      "logo": "/src/assets/certificates/LinkedIn logo.jpg",
+      "logo": "/src/assets/logos/LinkedIn logo.jpg",
       "fullImage": "/src/assets/certificates/The 3-Minute Rule Say Less to Get More.jpg"
     },
     {
@@ -255,7 +264,7 @@
       "provider": "LinkedIn",
       "date": "Oct 2020",
       "link": "https://www.linkedin.com/learning/certificates/c172eb5ea816de9dbf00a2f10cd5864c13e042a622af32236ea67c8ed0d5a0d2",
-      "logo": "/src/assets/certificates/LinkedIn logo.jpg",
+      "logo": "/src/assets/logos/LinkedIn logo.jpg",
       "fullImage": "/src/assets/certificates/Tech Soft Skills Effective Technical Communication.png"
     },
     {
@@ -264,7 +273,7 @@
       "provider": "LinkedIn",
       "date": "Sep 2020",
       "link": "https://www.linkedin.com/learning/certificates/9023370cf8c0f8ab17c3e806e4c9af4e955f167497e010d9bb14d8c6b804cbba",
-      "logo": "/src/assets/certificates/LinkedIn logo.jpg",
+      "logo": "/src/assets/logos/LinkedIn logo.jpg",
       "fullImage": "/src/assets/certificates/Programming Foundations Fundamentals.png"
     },
     {
@@ -273,7 +282,7 @@
       "provider": "LinkedIn",
       "date": "Aug 2020",
       "link": "https://www.linkedin.com/learning/certificates/b971e906b503edef5105ede6f502bbef8b5d755c2342389ecad173a17c3c124f",
-      "logo": "/src/assets/certificates/LinkedIn logo.jpg",
+      "logo": "/src/assets/logos/LinkedIn logo.jpg",
       "fullImage": "/src/assets/certificates/Microsoft Power Automate Advanced Business Automation.png"
     },
     {
@@ -282,7 +291,7 @@
       "provider": "LinkedIn",
       "date": "Aug 2020",
       "link": "https://www.linkedin.com/learning/certificates/2beb5417f90c1e4b0a3df9972e2ed3d5a543feb02f04b4c4c4f426d431af390e",
-      "logo": "/src/assets/certificates/LinkedIn logo.jpg",
+      "logo": "/src/assets/logos/LinkedIn logo.jpg",
       "fullImage": "/src/assets/certificates/Managing Virtual Teams.png"
     },
     {
@@ -290,7 +299,7 @@
       "title": "RPA Developer Foundation",
       "provider": "UiPath",
       "date": "Feb 2020",
-      "logo": "/src/assets/certificates/UiPath logo.jpg",
+      "logo": "/src/assets/logos/UiPath logo.jpg",
       "fullImage": "/src/assets/certificates/UiPath Academy - RPA Developer Foundation - Blue.png"
     },
     {
@@ -298,7 +307,7 @@
       "title": "AI Computer Vision 2.0",
       "provider": "UiPath",
       "date": "Feb 2020",
-      "logo": "/src/assets/certificates/UiPath logo.jpg",
+      "logo": "/src/assets/logos/UiPath logo.jpg",
       "fullImage": "/src/assets/certificates/UiPath Academy - AI Computer Vision 2.0 - Blue.png"
     },
     {
@@ -306,7 +315,7 @@
       "title": "UiPath Security Training",
       "provider": "UiPath",
       "date": "Feb 2020",
-      "logo": "/src/assets/certificates/UiPath logo.jpg",
+      "logo": "/src/assets/logos/UiPath logo.jpg",
       "fullImage": "/src/assets/certificates/UiPath Academy - UiPath Security Training - Blue.png"
     },
     {
@@ -314,7 +323,7 @@
       "title": "UiPath Licensing Training",
       "provider": "UiPath",
       "date": "Feb 2020",
-      "logo": "/src/assets/certificates/UiPath logo.jpg",
+      "logo": "/src/assets/logos/UiPath logo.jpg",
       "fullImage": "/src/assets/certificates/UiPath Academy - UiPath Licensing Training - Orange.png"
     },
     {
@@ -322,7 +331,7 @@
       "title": "RPA Developer - SAP Automation Training",
       "provider": "UiPath",
       "date": "Feb 2020",
-      "logo": "/src/assets/certificates/UiPath logo.jpg",
+      "logo": "/src/assets/logos/UiPath logo.jpg",
       "fullImage": "/src/assets/certificates/UiPath Academy - RPA Developer - SAP Automation Training - Blue.png"
     },
     {
@@ -330,7 +339,7 @@
       "title": "RPA Starter Training",
       "provider": "UiPath",
       "date": "Jan 2020",
-      "logo": "/src/assets/certificates/UiPath logo.jpg",
+      "logo": "/src/assets/logos/UiPath logo.jpg",
       "fullImage": "/src/assets/certificates/UiPath Academy - RPA Starter Traning - Orange.png"
     },
     {
@@ -338,7 +347,7 @@
       "title": "Data Modeling Using Power Pivot",
       "provider": "Excel Olympics",
       "date": "Nov 2018",
-      "logo": "/src/assets/certificates/Excel Olympics logo.jpg"
+      "logo": "/src/assets/logos/Excel Olympics logo.jpg"
     },
     {
       "id": "cert-19",
@@ -351,14 +360,14 @@
       "title": "Microsoft PowerBI for Excel",
       "provider": "ITraining Bulgaria",
       "date": "Jul 2017",
-      "logo": "/src/assets/certificates/ITraining Bulgaria logo.jpg"
+      "logo": "/src/assets/logos/ITraining Bulgaria logo.jpg"
     },
     {
       "id": "cert-15",
       "title": "Power Query: Transform Data",
       "provider": "Excelguru Consulting Inc.",
       "date": "Nov 2017",
-      "logo": "/src/assets/certificates/Excelguru Consulting Inc. logo.jpg"
+      "logo": "/src/assets/logos/Excelguru Consulting Inc. logo.jpg"
     },
     {
       "id": "cert-1",
@@ -366,7 +375,7 @@
       "provider": "MyIQ",
       "date": "Sep 2026",
       "certId": "415 889",
-      "logo": "/src/assets/certificates/MyIQ logo.jpg",
+      "logo": "/src/assets/logos/MyIQ logo.jpg",
       "fullImage": "/src/assets/certificates/MyIQ Certified IQ Score.png"
     },
     {
@@ -374,14 +383,14 @@
       "title": "School of Finance & Accounting",
       "provider": "MDV Professional Education",
       "date": "Dec 2018",
-      "logo": "/src/assets/certificates/MDV Professional Education logo.jpg"
+      "logo": "/src/assets/logos/MDV Professional Education logo.jpg"
     },
     {
       "id": "cert-17",
       "title": "Oracle Database 11g - SQL Fundamentals",
       "provider": "New Horizons",
       "date": "Apr 2016",
-      "logo": "/src/assets/certificates/New Horizons logo.jpg"
+      "logo": "/src/assets/logos/New Horizons logo.jpg"
     },
     {
       "id": "cert-18",
@@ -389,7 +398,7 @@
       "provider": "BRITANICA",
       "date": "Nov 2013",
       "certId": "4500",
-      "logo": "/src/assets/certificates/BRITANICA logo.jpg"
+      "logo": "/src/assets/logos/BRITANICA logo.jpg"
     },
     {
       "id": "cert-20",
@@ -405,5 +414,31 @@
     "ctaTitle": "Ready to optimize your business processes?",
     "ctaSubtitle": "I am currently open to new opportunities in Automation Architecture, Technical Leadership, and Solution Design. Let's build something efficient together.",
     "availabilityText": "Available for worldwide remote consultation"
-  }
+  },
+  "education": [
+    {
+      "id": "edu-1",
+      "institution": "Technical University of Sofia",
+      "degree": "Bachelor of Engineering (B.Eng.), Electronics",
+      "period": "2005 - 2009",
+      "location": "Sofia, Bulgaria",
+      "logo": "/src/assets/logos/technical_university_of_sofia_logo.jpg",
+      "description": [
+        "Major in Electronics and Electronic Engineering.",
+        "Comprehensive coursework in electronic circuits, hardware architectures, microprocessors, digital signal processing, and embedded systems."
+      ]
+    },
+    {
+      "id": "edu-2",
+      "institution": "PGEHT \"Prof. Asen Zlatarov\"",
+      "degree": "Electrotechnical Education",
+      "period": "2000 - 2005",
+      "location": "Pleven, Bulgaria",
+      "logo": "/src/assets/logos/pgeht pleven.png",
+      "description": [
+        "Specialized high school vocational education in electrical engineering and electronics.",
+        "Foundational training in electro-technical systems, automation principles, and circuit engineering."
+      ]
+    }
+  ]
 }

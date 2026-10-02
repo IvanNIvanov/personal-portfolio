@@ -23,10 +23,11 @@ import {
   RotateCcw,
   Link as LinkIcon,
   MapPin,
-  GripVertical
+  GripVertical,
+  GraduationCap
 } from 'lucide-react';
 import { usePortfolio } from '../../context/PortfolioContext';
-import { PortfolioData, Experience, SkillCategory, Certification } from '../../types/portfolio';
+import { PortfolioData, Experience, Education, SkillCategory, Certification } from '../../types/portfolio';
 import { downloadCV } from '../../utils/downloadCV';
 import { getAssetUrl } from '../../utils/assetUrl';
 
@@ -47,7 +48,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose }) => {
   } = usePortfolio();
 
   const [activeTab, setActiveTab] = useState<
-    'about' | 'cv-photo' | 'experience' | 'skills' | 'certifications' | 'contact' | 'security'
+    'about' | 'cv-photo' | 'experience' | 'education' | 'skills' | 'certifications' | 'contact' | 'security'
   >('about');
 
   // Working local state before saving to server
@@ -76,6 +77,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose }) => {
 
   // Expanded experience & cert item ids for accordion editing
   const [expandedExpId, setExpandedExpId] = useState<string | null>(null);
+  const [expandedEduId, setExpandedEduId] = useState<string | null>(null);
   const [expandedCertId, setExpandedCertId] = useState<string | null>(null);
 
   // Certifications drag-and-drop state
@@ -292,6 +294,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose }) => {
             { id: 'about', label: 'Profile & About', icon: <User size={18} /> },
             { id: 'cv-photo', label: 'Photo & CV File', icon: <FileText size={18} /> },
             { id: 'experience', label: 'Work History', icon: <Briefcase size={18} />, badge: formData.experiences.length },
+            { id: 'education', label: 'Education', icon: <GraduationCap size={18} />, badge: formData.education?.length || 0 },
             { id: 'skills', label: 'Skills & Expertise', icon: <Cpu size={18} />, badge: formData.skills.length },
             { id: 'certifications', label: 'Certifications', icon: <Award size={18} />, badge: formData.certifications.length },
             { id: 'contact', label: 'Contact & Social', icon: <Mail size={18} /> },
@@ -890,6 +893,232 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose }) => {
                                     )}
                                   </div>
                                 ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB: Education */}
+            {activeTab === 'education' && (
+              <div className="space-y-6">
+                <div className="bg-white p-6 sm:p-8 rounded-3xl border border-black/5 shadow-sm space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-zinc-900 flex items-center gap-2">
+                        <GraduationCap className="text-blue-600" />
+                        Academic Background & Education
+                      </h3>
+                      <p className="text-xs text-zinc-500 mt-1">
+                        Manage universities, high schools, degrees, and electro-technical background.
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        const newEdu: Education = {
+                          id: Date.now().toString(),
+                          institution: 'New Institution',
+                          degree: 'Degree / Specialization',
+                          period: '2020 - 2024',
+                          location: 'Sofia, Bulgaria',
+                          description: ['Key coursework and honors.']
+                        };
+                        handleDataChange((prev) => ({
+                          ...prev,
+                          education: [newEdu, ...(prev.education || [])]
+                        }));
+                        setExpandedEduId(newEdu.id);
+                        showNotify('success', 'New education entry added!');
+                      }}
+                      className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-sm transition-all cursor-pointer self-start sm:self-auto"
+                    >
+                      <Plus size={16} /> Add Education
+                    </button>
+                  </div>
+
+                  {/* List of education entries */}
+                  <div className="space-y-4">
+                    {(formData.education || []).map((edu, eduIdx) => {
+                      const isExpanded = expandedEduId === edu.id;
+                      return (
+                        <div
+                          key={edu.id}
+                          className="border border-zinc-200 rounded-2xl bg-zinc-50/50 hover:bg-white transition-all overflow-hidden"
+                        >
+                          {/* Item summary bar */}
+                          <div
+                            onClick={() => setExpandedEduId(isExpanded ? null : edu.id)}
+                            className="p-4 flex items-center justify-between cursor-pointer select-none"
+                          >
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 overflow-hidden">
+                                {edu.logo ? (
+                                  <img src={getAssetUrl(edu.logo)} alt="" className="w-full h-full object-contain p-1" />
+                                ) : (
+                                  <GraduationCap size={18} className="text-blue-600" />
+                                )}
+                              </div>
+                              <div className="min-w-0">
+                                <h4 className="font-bold text-sm text-zinc-900 truncate">{edu.institution}</h4>
+                                <p className="text-xs text-blue-600 font-medium truncate">{edu.degree}</p>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-3 shrink-0">
+                              <span className="text-xs font-semibold text-zinc-500 bg-white px-2.5 py-1 rounded-full border border-black/5">
+                                {edu.period}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (confirm(`Delete ${edu.institution}?`)) {
+                                    handleDataChange((prev) => ({
+                                      ...prev,
+                                      education: (prev.education || []).filter((item) => item.id !== edu.id)
+                                    }));
+                                    showNotify('success', 'Education entry deleted');
+                                  }
+                                }}
+                                className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                                title="Delete education entry"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                              <div className="text-zinc-400">
+                                {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Expanded edit fields */}
+                          {isExpanded && (
+                            <div className="p-4 sm:p-6 border-t border-zinc-200 bg-white space-y-4">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                  <label className="block text-xs font-bold text-zinc-600 mb-1">Institution Name</label>
+                                  <input
+                                    type="text"
+                                    value={edu.institution}
+                                    onChange={(e) => {
+                                      const next = [...(formData.education || [])];
+                                      next[eduIdx] = { ...next[eduIdx], institution: e.target.value };
+                                      handleDataChange((prev) => ({ ...prev, education: next }));
+                                    }}
+                                    className="w-full px-3.5 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-sm font-medium focus:bg-white focus:border-blue-600 outline-none"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="block text-xs font-bold text-zinc-600 mb-1">Degree / Specialization</label>
+                                  <input
+                                    type="text"
+                                    value={edu.degree}
+                                    onChange={(e) => {
+                                      const next = [...(formData.education || [])];
+                                      next[eduIdx] = { ...next[eduIdx], degree: e.target.value };
+                                      handleDataChange((prev) => ({ ...prev, education: next }));
+                                    }}
+                                    className="w-full px-3.5 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-sm font-medium focus:bg-white focus:border-blue-600 outline-none"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="block text-xs font-bold text-zinc-600 mb-1">Period (e.g. 2005 - 2009)</label>
+                                  <input
+                                    type="text"
+                                    value={edu.period}
+                                    onChange={(e) => {
+                                      const next = [...(formData.education || [])];
+                                      next[eduIdx] = { ...next[eduIdx], period: e.target.value };
+                                      handleDataChange((prev) => ({ ...prev, education: next }));
+                                    }}
+                                    className="w-full px-3.5 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-sm font-medium focus:bg-white focus:border-blue-600 outline-none"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="block text-xs font-bold text-zinc-600 mb-1">Location (City, Country)</label>
+                                  <input
+                                    type="text"
+                                    value={edu.location || ''}
+                                    onChange={(e) => {
+                                      const next = [...(formData.education || [])];
+                                      next[eduIdx] = { ...next[eduIdx], location: e.target.value };
+                                      handleDataChange((prev) => ({ ...prev, education: next }));
+                                    }}
+                                    className="w-full px-3.5 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-sm font-medium focus:bg-white focus:border-blue-600 outline-none"
+                                  />
+                                </div>
+                              </div>
+
+                              <div>
+                                <label className="block text-xs font-bold text-zinc-600 mb-1">Logo Asset Path</label>
+                                <input
+                                  type="text"
+                                  value={edu.logo || ''}
+                                  onChange={(e) => {
+                                    const next = [...(formData.education || [])];
+                                    next[eduIdx] = { ...next[eduIdx], logo: e.target.value };
+                                    handleDataChange((prev) => ({ ...prev, education: next }));
+                                  }}
+                                  placeholder="/src/assets/logos/..."
+                                  className="w-full px-3.5 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-sm font-medium focus:bg-white focus:border-blue-600 outline-none"
+                                />
+                              </div>
+
+                              <div>
+                                <div className="flex items-center justify-between mb-2">
+                                  <label className="block text-xs font-bold text-zinc-600">Bullet Points</label>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const next = [...(formData.education || [])];
+                                      const currentDesc = next[eduIdx].description || [];
+                                      next[eduIdx] = {
+                                        ...next[eduIdx],
+                                        description: [...currentDesc, 'New description item.']
+                                      };
+                                      handleDataChange((prev) => ({ ...prev, education: next }));
+                                    }}
+                                    className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
+                                  >
+                                    <Plus size={14} /> Add Bullet Point
+                                  </button>
+                                </div>
+                                <div className="space-y-2">
+                                  {(edu.description || []).map((desc, dIdx) => (
+                                    <div key={dIdx} className="flex gap-2">
+                                      <textarea
+                                        rows={2}
+                                        value={desc}
+                                        onChange={(e) => {
+                                          const next = [...(formData.education || [])];
+                                          const nextDesc = [...(next[eduIdx].description || [])];
+                                          nextDesc[dIdx] = e.target.value;
+                                          next[eduIdx] = { ...next[eduIdx], description: nextDesc };
+                                          handleDataChange((prev) => ({ ...prev, education: next }));
+                                        }}
+                                        className="flex-1 px-3.5 py-2 bg-zinc-50 border border-zinc-200 rounded-xl text-xs sm:text-sm font-medium focus:bg-white focus:border-blue-600 outline-none resize-y"
+                                      />
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          const next = [...(formData.education || [])];
+                                          const nextDesc = (next[eduIdx].description || []).filter((_, i) => i !== dIdx);
+                                          next[eduIdx] = { ...next[eduIdx], description: nextDesc };
+                                          handleDataChange((prev) => ({ ...prev, education: next }));
+                                        }}
+                                        className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors cursor-pointer self-start"
+                                      >
+                                        <Trash2 size={14} />
+                                      </button>
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
                           )}
