@@ -77,8 +77,10 @@ const Navigation = ({
   }, []);
 
   const handleNavClick = (id: string) => {
-    onScrollTo(id);
     setIsMobileMenuOpen(false);
+    setTimeout(() => {
+      onScrollTo(id);
+    }, 60);
   };
 
   return (
@@ -211,18 +213,22 @@ const Navigation = ({
             >
               <div className="flex flex-col gap-1.5">
                 {items.map((item) => (
-                  <button
+                  <a
                     key={item.id}
-                    onClick={() => handleNavClick(item.id)}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all text-left ${
+                    href={`#${item.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(item.id);
+                    }}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left cursor-pointer select-none ${
                       activeSection === item.id
                         ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                        : "text-zinc-700 hover:bg-zinc-100"
+                        : "text-zinc-700 hover:bg-zinc-100 active:bg-zinc-200"
                     }`}
                   >
                     <span className="scale-90">{item.icon}</span>
                     <span>{item.label}</span>
-                  </button>
+                  </a>
                 ))}
 
                 <div className="pt-3 mt-2 border-t border-black/5 flex items-center justify-between">
@@ -264,7 +270,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex flex-col justify-center px-8 md:px-20 max-w-7xl mx-auto pt-20 relative">
+    <section id="home" className="min-h-screen flex flex-col justify-center px-8 md:px-20 max-w-7xl mx-auto pt-20 relative scroll-mt-20 md:scroll-mt-24">
       {/* Dynamic ambient background orbs */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
         <motion.div 
@@ -350,7 +356,7 @@ const About = () => {
   const { data } = usePortfolio();
 
   return (
-    <section id="about" className="py-32 px-8 md:px-20 max-w-7xl mx-auto">
+    <section id="about" className="py-32 px-8 md:px-20 max-w-7xl mx-auto scroll-mt-20 md:scroll-mt-24">
       <SectionHeading title="About Me" subtitle="Profile" />
       <div className="grid md:grid-cols-2 gap-16 items-center">
         <motion.div 
@@ -479,7 +485,7 @@ const ExperienceSection = () => {
   const { data } = usePortfolio();
 
   return (
-    <section id="experience" className="py-32 px-8 md:px-20 max-w-7xl mx-auto">
+    <section id="experience" className="py-32 px-8 md:px-20 max-w-7xl mx-auto scroll-mt-20 md:scroll-mt-24">
       <SectionHeading title="Work History" subtitle="Experience" />
       <div className="relative border-l-2 border-blue-100 ml-4 md:ml-8 pl-6 md:pl-10 space-y-10">
         {data.experiences.map((exp, idx) => (
@@ -529,7 +535,7 @@ const Skills = () => {
   const { data } = usePortfolio();
 
   return (
-    <section id="skills" className="py-20 md:py-32 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto">
+    <section id="skills" className="py-20 md:py-32 px-6 sm:px-12 md:px-20 max-w-7xl mx-auto scroll-mt-20 md:scroll-mt-24">
       <SectionHeading title="My Expertise" subtitle="Skills" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
         {data.skills.map((cat, idx) => (
@@ -571,7 +577,7 @@ const Certifications = () => {
   const [selectedCert, setSelectedCert] = useState<any>(null);
 
   return (
-    <section id="certifications" className="py-20 md:py-32 px-6 sm:px-12 md:px-20 w-full max-w-7xl mx-auto overflow-hidden">
+    <section id="certifications" className="py-20 md:py-32 px-6 sm:px-12 md:px-20 w-full max-w-7xl mx-auto overflow-hidden scroll-mt-20 md:scroll-mt-24">
       <SectionHeading title="Accomplishments" subtitle="Certifications" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {data.certifications.map((cert, idx) => (
@@ -678,7 +684,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32 px-6 sm:px-12 md:px-20 w-full max-w-7xl mx-auto mb-20 overflow-hidden">
+    <section id="contact" className="py-20 md:py-32 px-6 sm:px-12 md:px-20 w-full max-w-7xl mx-auto mb-20 overflow-hidden scroll-mt-20 md:scroll-mt-24">
       <SectionHeading title="Get In Touch" subtitle="Contact" />
       <div className="max-w-4xl mx-auto text-center space-y-12">
         <motion.div
@@ -842,9 +848,34 @@ export default function App() {
   }, []);
 
   const scrollTo = (id: string) => {
+    if (id === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActiveSection("home");
+      return;
+    }
+
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      let top = 0;
+      let curr: HTMLElement | null = element;
+      while (curr) {
+        top += curr.offsetTop;
+        curr = curr.offsetParent as HTMLElement | null;
+      }
+      const headerOffset = window.innerWidth < 768 ? 65 : 75;
+      const targetTop = Math.max(0, top - headerOffset);
+
+      window.scrollTo({
+        top: targetTop,
+        behavior: "smooth"
+      });
+
+      try {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch {
+        // fallback
+      }
+
       setActiveSection(id);
     }
   };
