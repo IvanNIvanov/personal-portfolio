@@ -114,10 +114,22 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose }) => {
     const res = await updatePortfolio(formData);
     if (res.success) {
       setHasUnsavedChanges(false);
-      showNotify('success', 'All changes saved to server and applied live!');
+      showNotify('success', res.message || 'Changes saved and applied live!');
     } else {
       showNotify('error', res.message || 'Error saving changes.');
     }
+  };
+
+  const handleExportJSON = () => {
+    const jsonStr = JSON.stringify(formData, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'portfolio.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showNotify('success', 'Exported portfolio.json successfully!');
   };
 
   // CV Upload Handler
@@ -260,6 +272,16 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isOpen, onClose }) => {
           >
             <Save size={16} />
             <span>{isSaving ? 'Saving...' : 'Save Changes'}</span>
+          </button>
+
+          {/* Export JSON Button */}
+          <button
+            onClick={handleExportJSON}
+            className="px-3.5 py-2.5 rounded-xl text-sm font-medium bg-zinc-100 hover:bg-zinc-200 text-zinc-700 flex items-center gap-1.5 transition-colors cursor-pointer"
+            title="Download / Export portfolio.json file"
+          >
+            <Download size={16} />
+            <span className="hidden md:inline">Export JSON</span>
           </button>
 
           {/* View Public Site button */}
